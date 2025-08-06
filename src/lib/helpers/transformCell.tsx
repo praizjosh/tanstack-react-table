@@ -1,5 +1,5 @@
 import type { CellConfigType, CellInfoType } from "../types";
-import { formatDate } from "../utils";
+import { cn, formatDate } from "../utils";
 
 const createCellRenderer = (config: CellConfigType) => {
   return (info: CellInfoType) => {
@@ -16,9 +16,10 @@ const createCellRenderer = (config: CellConfigType) => {
       case "approved":
         return (
           <span
-            className={`px-2.5 py-1 capitalize rounded-full text-xs font-medium ${
-              value ? "bg-green-100 text-green-800" : "bg-yellow-100 text-yellow-800"
-            }`}
+            className={cn(`px-2 py-1 capitalize rounded-full text-xs font-medium`, {
+              "bg-green-100 text-green-800": value,
+              "bg-yellow-100 text-yellow-800": !value,
+            })}
           >
             {value ? "✓ Approved" : "⏳ Pending"}
           </span>
@@ -31,7 +32,7 @@ const createCellRenderer = (config: CellConfigType) => {
 
       case "absenceType":
         return (
-          <span className={`px-2.5 py-1 capitalize rounded-full text-xs font-medium ${colorClass}`}>
+          <span className={cn(`px-2 py-1 capitalize rounded-full text-xs font-medium`, colorClass)}>
             {String(value).replace(/_/g, " ").toLocaleLowerCase()}
           </span>
         );
