@@ -1,14 +1,6 @@
-import { flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
-import { personObj } from "@/lib/defaultData";
-import { useMemo } from "react";
+import { formatDate } from "@/lib/utils";
 import { createColumnHelper } from "@tanstack/react-table";
 import type { PersonType } from "../../lib/types";
-import { formatDate } from "@/lib/utils";
-
-type EmployeeTableProps = {
-  queryData?: PersonType[];
-};
 
 const columnHelper = createColumnHelper<PersonType>();
 
@@ -188,54 +180,4 @@ const columns = [
   }),
 ];
 
-console.log("columns", columns);
-
-export default function EmployeeTable({ queryData }: EmployeeTableProps) {
-  const fallbackData = useMemo(() => personObj, []);
-  const defaultColumns = useMemo(() => columns, []);
-
-  const table = useReactTable<PersonType>({
-    data: queryData ?? fallbackData,
-    columns: defaultColumns,
-    getCoreRowModel: getCoreRowModel<PersonType>(),
-  });
-
-  return (
-    <div className="rounded-lg border border-border mt-8 overflow-hidden">
-      <Table>
-        <TableHeader>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <TableHead key={header.id} className="bg-secondary">
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(header.column.columnDef.header, header.getContext())}
-                </TableHead>
-              ))}
-            </TableRow>
-          ))}
-        </TableHeader>
-
-        <TableBody>
-          {table.getRowModel().rows.map((row) => (
-            <TableRow
-              key={row.id}
-              className="cursor-pointer hover:bg-secondary/25"
-              onClick={() => console.log(`Row ID: ${row.id}`)}
-            >
-              {row.getVisibleCells().map((cell) => {
-                console.log("cell", cell);
-                return (
-                  <TableCell key={cell.id} className="border">
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                );
-              })}
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </div>
-  );
-}
+console.log("columns", typeof columns);

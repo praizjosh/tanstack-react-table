@@ -1,6 +1,6 @@
+import EmployeeTable from "@/components/core/EmployeeTable";
 import { useQuery } from "@tanstack/react-query";
 import getAbsences from "../../lib/helpers/getAbsences";
-import EmployeeTable from "@/components/core/EmployeeTable";
 
 export default function AbsenceOverview() {
   const queryData = useQuery({
@@ -19,7 +19,7 @@ export default function AbsenceOverview() {
 
   return (
     <>
-      <div>AbsenceOverview</div>
+      <div>Absence Overview</div>
 
       <EmployeeTable queryData={queryData.data} />
     </>

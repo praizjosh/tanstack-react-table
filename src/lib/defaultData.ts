@@ -25,13 +25,14 @@ const personObj: PersonType[] = [
 
 const COLUMN_HEADER_LIST: ColumnHeaderType[] = [
   "id",
-  "startDate",
-  "days",
-  "absenceType",
-  "employee.firstName",
+   "employee.firstName",
   "employee.lastName",
   "employee.id",
+  "startDate",
+  "absenceType",
+  "days",
   "approved",
 ];
 
-export { personObj, COLUMN_HEADER_LIST };
+export { COLUMN_HEADER_LIST, personObj };
+

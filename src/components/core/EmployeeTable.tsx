@@ -1,10 +1,15 @@
-import { flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
 import { COLUMN_HEADER_LIST, personObj } from "@/lib/defaultData";
-import { useMemo } from "react";
-import { createColumnHelper } from "@tanstack/react-table";
-import type { PersonType } from "../../lib/types";
+import transformCell from "@/lib/helpers/transformCell";
 import { transformCamelCaseToSpaces } from "@/lib/utils";
+import {
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
+import { useMemo } from "react";
+import type { PersonType } from "../../lib/types";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
 
 type EmployeeTableProps = {
   queryData?: PersonType[];
@@ -15,7 +20,10 @@ const columnHelper = createColumnHelper<PersonType>();
 const columns = COLUMN_HEADER_LIST.map((columnName) => {
   return columnHelper.accessor(columnName, {
     id: columnName,
-    cell: (info) => info.getValue(),
+    // cell: (info) => info.getValue(),
+    cell: (info) => transformCell(info),
+    // cell: (info) => transformCellX(info),
+
     header: () => <span className="capitalize">{transformCamelCaseToSpaces(columnName)}</span>,
     footer: (props) => props.column.id,
   });
@@ -32,7 +40,7 @@ export default function EmployeeTable({ queryData }: EmployeeTableProps) {
   });
 
   return (
-    <div className="rounded-lg border border-border mt-8 overflow-hidden">
+    <div className="rounded-lg border border-border mt-4 overflow-hidden">
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -56,7 +64,7 @@ export default function EmployeeTable({ queryData }: EmployeeTableProps) {
               onClick={() => console.log(`Row ID: ${row.id}`)}
             >
               {row.getVisibleCells().map((cell) => (
-                <TableCell key={cell.id} className="border">
+                <TableCell key={cell.id} className="border text-start">
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </TableCell>
               ))}
